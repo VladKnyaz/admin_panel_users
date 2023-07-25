@@ -20,21 +20,21 @@ class AppBarUsers {
       ),
       actions: [
         Container(
-            margin: const EdgeInsets.only(right: 22),
-            width: 36,
-            height: 36,
-            child: ClipOval(
-              child: Material(
-                color: const Color.fromARGB(255, 255, 255, 255), // Button color
-                child: InkWell(
-                  splashColor:
-                      Color.fromARGB(255, 112, 186, 255), // Splash color
-                  onTap: () {},
-                  child: SizedBox(
-                      width: 56, height: 56, child: Icon(Icons.search)),
-                ),
+          margin: const EdgeInsets.only(right: 22),
+          width: 36,
+          height: 36,
+          child: ClipOval(
+            child: Material(
+              color: const Color.fromARGB(255, 255, 255, 255), // Button color
+              child: InkWell(
+                splashColor: Color.fromARGB(255, 112, 186, 255), // Splash color
+                onTap: () {},
+                child:
+                    SizedBox(width: 56, height: 56, child: Icon(Icons.search)),
               ),
-            ))
+            ),
+          ),
+        )
       ],
     );
   }

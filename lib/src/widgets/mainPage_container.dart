@@ -11,7 +11,6 @@ class MainPageContainer extends StatelessWidget {
       ),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      decoration: const BoxDecoration(color: Color.fromARGB(255, 37, 30, 46)),
     );
   }
 }
