@@ -73,7 +73,7 @@ class PersonComponent extends StatelessWidget {
                         color: Color.fromARGB(0, 255, 255, 255), // Button color
                         child: InkWell(
                           onTap: () {
-                            showModalPersonSheet(context);
+                            showModalPersonSheet(context, userInfo);
                           },
                           child: SizedBox(
                               width: 56, height: 56, child: Icon(Icons.edit)),
