@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:users_app/src/repositories/users.dart';
 import 'package:users_app/src/services/user.service.dart';
 import 'package:users_app/src/widgets/person.dart';
 
@@ -31,7 +32,8 @@ class _ListComponentState extends State<ListComponent> {
         child: ListView.builder(
       itemCount: listUsers == null ? 0 : listUsers.length,
       itemBuilder: (BuildContext context, index) {
-        return PersonComponent(listUsers[index]["id"], listUsers[index]);
+        return PersonComponent(
+            listUsers[index]["id"], listUsers[index], getData);
       },
     ));
   }

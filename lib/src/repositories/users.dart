@@ -22,6 +22,20 @@ class UsersApi {
     }
   }
 
-  void createUser() {}
+  static Future deleteUser(int id) async {
+    try {
+      final response = await dio.delete('$_baseUrl/delete/$id');
+      return response.data;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static void createUser() async {
+    final response = await dio.post('$_baseUrl/create', data: {
+      "info": {"name": "Name", "login": "login", "password": "asdfghbnm0"}
+    });
+  }
+
   void updateUser(int id) {}
 }

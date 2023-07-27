@@ -6,7 +6,7 @@ import 'package:users_app/src/repositories/users.dart';
 
 class UserService {
   static void deleteUser(int id) async {
-    print(id);
+    await UsersApi.deleteUser(id);
   }
 
   static Future<List?> getUsers() async {

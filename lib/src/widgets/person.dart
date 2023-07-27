@@ -4,19 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:users_app/src/services/user.service.dart';
 import 'package:users_app/src/utils/time.dart';
+import 'package:users_app/src/widgets/person_edit_modal_sheet.dart';
 
 class PersonComponent extends StatelessWidget {
   int _id;
   Map<String, dynamic> userInfo;
+  Function getData;
 
-  PersonComponent(this._id, this.userInfo, {super.key});
+  PersonComponent(this._id, this.userInfo, this.getData, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    var date = HttpDate.parse(HttpDateParse(userInfo['date']))
-        .toString()
-        .split(' ')[0];
-
+    var date = userInfo['date'].replaceAll('/', '.');
     return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -39,9 +38,6 @@ class PersonComponent extends StatelessWidget {
                   ),
                   Text(
                     "$date",
-                    // HttpDate.parse(userInfo["date"]).toString(),
-                    // DateFormat('yyyy-MM-dd hh:mm:ss').format(userInfo["date"])
-                    //     as String,
                     style: TextStyle(fontSize: 12),
                   ),
                 ],
@@ -76,7 +72,9 @@ class PersonComponent extends StatelessWidget {
                       child: Material(
                         color: Color.fromARGB(0, 255, 255, 255), // Button color
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            showModalPersonSheet(context);
+                          },
                           child: SizedBox(
                               width: 56, height: 56, child: Icon(Icons.edit)),
                         ),
@@ -92,6 +90,8 @@ class PersonComponent extends StatelessWidget {
                         child: InkWell(
                           onTap: () {
                             UserService.deleteUser(_id);
+
+                            getData(); // из list.dart
                           },
                           child: SizedBox(
                               width: 56, height: 56, child: Icon(Icons.delete)),
