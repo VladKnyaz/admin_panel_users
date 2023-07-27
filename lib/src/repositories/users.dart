@@ -37,5 +37,7 @@ class UsersApi {
     });
   }
 
-  void updateUser(int id) {}
+  static void updateUser(int id) {
+    
+  }
 }

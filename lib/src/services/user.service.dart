@@ -9,6 +9,13 @@ class UserService {
     await UsersApi.deleteUser(id);
   }
 
+  static void updateUser(int id,
+      {required String name,
+      required String login,
+      required String password}) async {
+    UsersApi.updateUser(id);
+  }
+
   static Future<List?> getUsers() async {
     Response response = await UsersApi.getUsers();
     if (response.statusCode == 200) {

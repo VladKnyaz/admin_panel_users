@@ -1,33 +1,32 @@
 import 'package:flutter/material.dart';
 
-class ModalInputComponent extends StatefulWidget {
+class ModalInputComponent extends StatelessWidget {
   final String name;
   EdgeInsetsGeometry? marginStyle;
+  final Function onChangeFunction;
 
-  ModalInputComponent(this.name, this.marginStyle, {super.key});
-
-  @override
-  State<ModalInputComponent> createState() => _ModalInputComponentState();
-}
-
-class _ModalInputComponentState extends State<ModalInputComponent> {
-  _ModalInputComponentState();
+  ModalInputComponent(this.name, this.marginStyle,
+      {required this.onChangeFunction, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: super.widget.marginStyle,
+      margin: marginStyle,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(super.widget.name, style: TextStyle(fontSize: 16)),
+          Text(name, style: TextStyle(fontSize: 16)),
           Container(
             margin: const EdgeInsets.only(top: 10),
             child: TextField(
+              onChanged: (value) {
+                onChangeFunction(value);
+                // super.widget.onChange(value);
+              },
               decoration: InputDecoration(
                 isCollapsed: true,
                 contentPadding: const EdgeInsets.all(14),
-                hintText: super.widget.name,
+                hintText: name,
                 hintStyle: const TextStyle(fontSize: 13),
                 enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Color(0xFFCCCCCC), width: 5.0),
@@ -48,7 +47,8 @@ class _ModalInputComponentState extends State<ModalInputComponent> {
 
 class ButtonInModal extends StatelessWidget {
   final String name;
-  const ButtonInModal(this.name, {super.key});
+  final Function onPressed;
+  const ButtonInModal(this.name, {required this.onPressed, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,9 @@ class ButtonInModal extends StatelessWidget {
           ),
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        onPressed();
+      },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.25,
         alignment: Alignment.center,

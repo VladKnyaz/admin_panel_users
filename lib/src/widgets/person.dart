@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:users_app/src/services/user.service.dart';
 import 'package:users_app/src/utils/time.dart';
+import 'package:users_app/src/widgets/person_edit_component.dart';
 import 'package:users_app/src/widgets/person_edit_modal_sheet.dart';
 
-class PersonComponent extends StatelessWidget {
+class PersonComponent extends StatefulWidget {
   int _id;
   Map<String, dynamic> userInfo;
   Function getData;
@@ -14,8 +15,45 @@ class PersonComponent extends StatelessWidget {
   PersonComponent(this._id, this.userInfo, this.getData, {super.key});
 
   @override
+  State<PersonComponent> createState() => _PersonComponentState();
+}
+
+class _PersonComponentState extends State<PersonComponent> {
+  String userName = '';
+  String userLogin = '';
+  String userPassword = '';
+
+  @override
+  void initState() {
+    setState(() {
+      userName = super.widget.userInfo['info']['name'];
+      userLogin = super.widget.userInfo['info']['login'];
+      userPassword = super.widget.userInfo['info']['password'];
+    });
+    super.initState();
+  }
+
+  changeName(String name) {
+    setState(() {
+      userName = name;
+    });
+  }
+
+  changeLogin(String login) {
+    setState(() {
+      userLogin = login;
+    });
+  }
+
+  changePassword(String password) {
+    setState(() {
+      userPassword = password;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var date = userInfo['date'].replaceAll('/', '.');
+    var date = super.widget.userInfo['date'].replaceAll('/', '.');
     return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -33,7 +71,7 @@ class PersonComponent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    userInfo["info"]["name"],
+                    userName,
                     style: TextStyle(fontSize: 16),
                   ),
                   Text(
@@ -49,12 +87,12 @@ class PersonComponent extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "${userInfo['info']['login']}",
+                      userLogin,
                     ),
                   ),
                   Expanded(
                     child: Text(
-                      "${userInfo['info']['password']}",
+                      userPassword,
                     ),
                   ),
                 ],
@@ -73,7 +111,11 @@ class PersonComponent extends StatelessWidget {
                         color: Color.fromARGB(0, 255, 255, 255), // Button color
                         child: InkWell(
                           onTap: () {
-                            showModalPersonSheet(context, userInfo);
+                            showModalPersonSheet(
+                              context,
+                              super.widget.userInfo,
+                              super.widget.getData,
+                            );
                           },
                           child: SizedBox(
                               width: 56, height: 56, child: Icon(Icons.edit)),
@@ -89,9 +131,9 @@ class PersonComponent extends StatelessWidget {
                         color: Color.fromARGB(0, 255, 255, 255), // Button color
                         child: InkWell(
                           onTap: () {
-                            UserService.deleteUser(_id);
+                            UserService.deleteUser(super.widget._id);
 
-                            getData(); // из list.dart
+                            super.widget.getData(); // из list.dart
                           },
                           child: SizedBox(
                               width: 56, height: 56, child: Icon(Icons.delete)),
