@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:intl/intl.dart';
 import 'package:users_app/src/repositories/users.dart';
 
 class UserService {

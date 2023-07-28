@@ -35,12 +35,22 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  String searchText = '';
+
+  void changeSearchText(value) {
+    setState(() {
+      searchText = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // UsersApi.createUser();
     return Scaffold(
-      appBar: AppBarUsers().build(),
-      body: MainPageContainer(),
+      appBar: AppBarUsers(changeSearchText: changeSearchText),
+      body: MainPageContainer(
+        searchText: searchText,
+      ),
     );
   }
 }

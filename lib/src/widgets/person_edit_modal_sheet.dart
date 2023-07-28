@@ -80,9 +80,9 @@ void showModalPersonSheet(BuildContext context, userInfo, getData) {
                                   password: userPassword)
                               .then((res) {
                             print(res);
-                            Navigator.of(ctxLoader).pop();
-
                             getData();
+                            
+                            Navigator.of(ctxLoader).pop();
                           });
                           showDialog(
                             barrierDismissible: false,
@@ -96,6 +96,7 @@ void showModalPersonSheet(BuildContext context, userInfo, getData) {
                             },
                             context: context,
                           );
+                          getData();
                         },
                         // isLoading: isLoading,
                       ),
