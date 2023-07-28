@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ModalInputComponent extends StatelessWidget {
+class ModalInputComponent extends StatefulWidget {
   final String name;
   EdgeInsetsGeometry? marginStyle;
   final Function onChangeFunction;
@@ -9,24 +9,39 @@ class ModalInputComponent extends StatelessWidget {
       {required this.onChangeFunction, super.key});
 
   @override
+  State<ModalInputComponent> createState() => _ModalInputComponentState();
+}
+
+class _ModalInputComponentState extends State<ModalInputComponent> {
+  TextEditingController textController = TextEditingController(text: '');
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(textController.text);
     return Container(
-      margin: marginStyle,
+      margin: widget.marginStyle,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(name, style: TextStyle(fontSize: 16)),
+          Text(widget.name, style: TextStyle(fontSize: 16)),
           Container(
             margin: const EdgeInsets.only(top: 10),
             child: TextField(
+              controller: textController,
               onChanged: (value) {
-                onChangeFunction(value);
-                // super.widget.onChange(value);
+                widget.onChangeFunction(value);
+                // widget.onChangeFunction(textController.text);
               },
               decoration: InputDecoration(
                 isCollapsed: true,
                 contentPadding: const EdgeInsets.all(14),
-                hintText: name,
+                hintText: widget.name,
                 hintStyle: const TextStyle(fontSize: 13),
                 enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Color(0xFFCCCCCC), width: 5.0),
@@ -48,7 +63,12 @@ class ModalInputComponent extends StatelessWidget {
 class ButtonInModal extends StatelessWidget {
   final String name;
   final Function onPressed;
-  const ButtonInModal(this.name, {required this.onPressed, super.key});
+  bool? isLoading;
+
+  ButtonInModal(this.name,
+      {required this.onPressed, this.isLoading, super.key}) {
+    isLoading = false;
+  }
 
   @override
   Widget build(BuildContext context) {

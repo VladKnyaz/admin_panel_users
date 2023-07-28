@@ -20,13 +20,12 @@ class _ListComponentState extends State<ListComponent> {
   }
 
   void getData() async {
-    var resp = await UserService.getUsers();
-    setState(() {
-      listUsers = resp;
+    await UserService.getUsers().then((res) {
+      setState(() {
+        listUsers = res;
+      });
     });
   }
-
-  
 
   @override
   Widget build(BuildContext context) {

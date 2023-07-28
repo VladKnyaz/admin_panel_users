@@ -9,11 +9,15 @@ class UserService {
     await UsersApi.deleteUser(id);
   }
 
-  static void updateUser(int id,
+  static Future updateUser(int id,
       {required String name,
       required String login,
       required String password}) async {
-    UsersApi.updateUser(id);
+    var result = null;
+    await UsersApi.updateUser(id, name, login, password).then((res) {
+      result = res;
+    });
+    return result;
   }
 
   static Future<List?> getUsers() async {

@@ -13,7 +13,7 @@ void showModalPersonSheet(BuildContext context, userInfo, getData) {
         String userName = userInfo['info']['name'];
         String userLogin = userInfo['info']['login'];
         String userPassword = userInfo['info']['password'];
-
+        bool isLoading = false;
         return StatefulBuilder(
           builder: (BuildContext context, setState) {
             void changeName(String name) {
@@ -31,6 +31,12 @@ void showModalPersonSheet(BuildContext context, userInfo, getData) {
             void changePassword(String password) {
               setState(() {
                 userPassword = password;
+              });
+            }
+
+            void changeLoading(bool isLoadingArg) {
+              setState(() {
+                isLoading = isLoadingArg;
               });
             }
 
@@ -66,16 +72,38 @@ void showModalPersonSheet(BuildContext context, userInfo, getData) {
                       ButtonInModal(
                         "Сохранить",
                         onPressed: () {
+                          Navigator.pop(context);
+                          BuildContext ctxLoader = context;
                           UserService.updateUser(userInfo['id'],
-                              name: userName,
-                              login: userLogin,
-                              password: userPassword);
+                                  name: userName,
+                                  login: userLogin,
+                                  password: userPassword)
+                              .then((res) {
+                            print(res);
+                            Navigator.of(ctxLoader).pop();
+
+                            getData();
+                          });
+                          showDialog(
+                            barrierDismissible: false,
+                            builder: (ctx) {
+                              ctxLoader = ctx;
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              );
+                            },
+                            context: context,
+                          );
                         },
+                        // isLoading: isLoading,
                       ),
                       ButtonInModal(
                         "Отменить",
                         onPressed: () {
                           Navigator.pop(context);
+                          getData();
                         },
                       ),
                     ],

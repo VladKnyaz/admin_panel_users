@@ -37,7 +37,11 @@ class UsersApi {
     });
   }
 
-  static void updateUser(int id) {
-    
+  static Future<Response> updateUser(
+      int id, String name, String login, String password) async {
+    final response = await dio.put('$_baseUrl/update/$id', data: {
+      "info": {"name": name, "login": login, "password": password}
+    });
+    return response;
   }
 }
